@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Deletar Pessoa</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="Content/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="Content/bootstrap.min.css">
+    </head>
+    <body>
+        
+         <table border="1" class="table-responsive" style="border:solid;width: 100%; border-style:inset; background-color:#3071a9;height: 120px;direction:initial" >
+            <thead>    
+                <tr  style="font-size:50px">
+                    <th class="text-center">Deletar Pessoa</th>
+                </tr>
+            </thead>
+           
+        </table>
+        
+        <br/>
+        
+        <form action="DeletarPessoa.php" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="text-left form-inline" style="color: blue">Id</label>
+                    <input type="text" name="id" id="id" class="form-control"  />
+                </div>
+            </div>
+        <br/>
+        <input type="submit" value="Enviar" id="enviarButton" class="btn-primary btn-lg">
+       </form>
+        <br/>
+       <a href="ListarPessoa.php"><input type="submit" value="Voltar" class="btn-primary btn-lg" /></a> 
+    </body>
+</html>
