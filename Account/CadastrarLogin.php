@@ -55,7 +55,7 @@ try{
   
     
     } catch (Exception $exc) {
-              echo "<div class='text-center'><label class='alert alert-success alert-dismissible fade in' role='alert'><h3>Usuario já exite tente outro.</h3></a></div>";
+              echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Usuario já exite tente outro.</h3></a></div>";
               echo "<div class='text-center'> <a href='PaginaCadastroLogin.php'><input type='submit' value='Voltar' class='btn-primary btn-lg'/></a></div>" ;
     } 
 
