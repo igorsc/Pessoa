@@ -7,7 +7,7 @@
  */
 
 
-include_once './AcessoBanco/AUsuario.php';
+include_once '../AcessoBanco/AUsuario.php';
 
 
 class UsuarioControle extends AUsuario  {
