@@ -35,13 +35,13 @@ try{
     if ($usuario->Login && $usuario->Senha ){  
         $controleusuario= new UsuarioControle();
         $result=  $controleusuario->_GetData();
-        while (list($login,$senha)=  mysqli_fetch_row($result)){
-
-                 if ($usuario->Login==$login ){
+        //while (list($login,$senha)=  mysqli_fetch_row($result)){
+        foreach ($result as $item) {
+                 if ($usuario->Login==$item->Login ){
                     throw  new Exception();
                  }
 			//	 
-				 if (strlen($senha)<4){
+				 if (strlen($item->Senha)<4){
 					  throw new mysqli_sql_exception();		
 				 }
         }
