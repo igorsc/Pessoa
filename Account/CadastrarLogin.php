@@ -41,7 +41,7 @@ try{
                  if ($usuario->Login==$user['Login'] ){
                     throw  new PDOException();
                  }
-                 if ( strlen($usuario->Senha)  < 4 ){
+                 if ( strlen($usuario->Senha)  != 4 ){
                     throw  new Exception();
                  }        
         }
@@ -64,7 +64,7 @@ try{
     } 
 
      catch (Exception $exc) {
-              echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Senha não pode ser menor que 04 dígitos.</h3></a></div>";
+              echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Senha senha deverá ser de 04 dígitos.</h3></a></div>";
               echo "<div class='text-center'> <a href='PaginaCadastroLogin.php'><input type='submit' value='Voltar' class='btn-primary btn-lg'/></a></div>" ;
     } 
 
