@@ -40,7 +40,7 @@ try{
                  if ($usuario->Login==$login ){
                     throw  new Exception();
                  }
-				 
+			//	 
 				 if (strlen($senha)<4){
 					  throw new mysqli_sql_exception();		
 				 }
