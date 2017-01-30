@@ -35,34 +35,36 @@ try{
     if ($usuario->Login && $usuario->Senha ){  
         $controleusuario= new UsuarioControle();
         $result=  $controleusuario->_GetData();
-        while (list($login,$senha)=  mysqli_fetch_row($result)){
-                 if ($usuario->Login==$login ){
-                    throw  new Exception();
+        //while (list($login)=  mysqli_fetch_row($result)){
+        foreach ($result as $user) {
+          # code...
+                 if ($usuario->Login==$user['Login'] ){
+                    throw  new PDOException();
                  }
-				 
-				 if (strlen($senha)<4){
-					  throw new mysqli_sql_exception();		
-				 }
+                 if ( strlen($usuario->Senha)   > 4 ){
+                    throw  new Exception();
+                 }        
         }
 
         $query= $controleusuario->Salvar($usuario->Login, $usuario->Senha,$usuario->Id);
 
-        echo "<div class='text-center'><label class='alert alert-success alert-dismissible fade in' role='alert'><h3>Usuário salvo com sucesso.</h3></a></div>";
+        echo "<div class='text-center'><label class='alert alert-success alert-dismissible fade in' role='alert'><h3>Usuario salvo com sucesso.</h3></a></div>";
         echo "<div class='text-center'> <a href='Login.php'><input type='submit' value='Voltar' class='btn-primary btn-lg'/></a></div>" ;
 
 
     }else{
-        echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Nao foi possível salvar usuário.</h3></a></div>";
+        echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Nao foi salvar usuario.</h3></a></div>";
         echo "<div class='text-center'> <a href='PaginaCadastroLogin.php'><input type='submit' value='Voltar' class='btn-primary btn-lg'/></a></div>" ;
     }
   
     
-    } catch (Exception $exc) {
-              echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Usuario já exite tente outro.</h3></a></div>";
+    } catch (PDOException $exc) {
+              echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Usuario já existe tente outro.</h3></a></div>";
               echo "<div class='text-center'> <a href='PaginaCadastroLogin.php'><input type='submit' value='Voltar' class='btn-primary btn-lg'/></a></div>" ;
-    } catch (mysqli_sql_exception $exc){
-		      echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Senha tem que ser maior que 4 digitos.</h3></a></div>";
-            echo "<div class='text-center'> <a href='PaginaCadastroLogin.php'><input type='submit' value='Voltar' class='btn-primary btn-lg'/></a></div>" ;
-	}
-	
+    } 
+
+     catch (Exception $exc) {
+              echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Senha não pode ultrapassar de 04 dígitos.</h3></a></div>";
+              echo "<div class='text-center'> <a href='PaginaCadastroLogin.php'><input type='submit' value='Voltar' class='btn-primary btn-lg'/></a></div>" ;
+    } 
 

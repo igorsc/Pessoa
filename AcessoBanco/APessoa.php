@@ -1,6 +1,6 @@
 <?php
 class Conexao1{
-public $server='localhost';
+public $server='127.0.0.1';
 public $user='root';
 public $senha='';
 public $db='Pessoa';
@@ -26,10 +26,24 @@ public function Conectar() {
           
         //mysql_select_db($this->db) or die (mysql_error());
       
-        $link= mysqli_connect($this->server,$this->user,$this->senha,$this->db) or  die("Não foi possivel conectar ao servidor e ao banco! ".  mysqli_connect_error());
+        //$link= mysqli_connect($this->server,$this->user,$this->senha,$this->db) or  die("Não foi possivel conectar ao servidor e ao banco! ".  mysqli_connect_error());
             
-        return $link;
+        //return $link;
 
+        $server='127.0.0.1';
+        $user='root';
+        $senha='';
+        $db='Pessoa';
+
+        try {
+          
+          $link = new PDO('mysql:host='.$server.';dbname='.$db,$user,$senha);
+
+          return $link;
+        
+        } catch (PDOException $e) {
+         echo "Conection falied database:". $e->getMessage();
+        }
  
 }
 
@@ -73,16 +87,16 @@ class APessoa extends Conexao1  {
                 throw new Exception("Não foi possivel conectar ao banco de dados");
             }else {
                 
-                mysqli_query($conectar,"Update  Pessoa Set Nome='$nome', Data='$data', Contato='$contato', TipoPessoa='$tipopessoa' 
-                       Where Id= '$id';");       
+                //mysqli_query($conectar,"Update  Pessoa Set Nome='$nome', Data='$data', Contato='$contato', TipoPessoa='$tipopessoa' 
+                       //Where Id= '$id';");       
                 
-                //$conn->query("Insert Into Pessoa (Nome,Data,Contato,TipoPessoa) values('$nome','$data','$contato','$tipopessoa');");
+                $conectar->query("Update  Pessoa Set Nome='$nome', Data='$data', Contato='$contato', TipoPessoa='$tipopessoa' Where Id= '$id';");
 
             }
          
           
            
-       } catch (Exception $exc) {
+       } catch (PDOException $exc) {
            echo "Error:".$exc->getMessage();
         }
 
@@ -105,11 +119,11 @@ class APessoa extends Conexao1  {
                 
                }else {
                    
-                     mysqli_query($conectar,"Insert Into Pessoa (Nome,Data,Contato,TipoPessoa) values('$nome','$data','$contato'
-                     ,'$tipopessoa');");
+                     //mysqli_query($conectar,"Insert Into Pessoa (Nome,Data,Contato,TipoPessoa) values('$nome','$data','$contato'
+                     //,'$tipopessoa');");
                      
-                      // $conn->query("Insert Into Pessoa (Nome,Data,Contato,TipoPessoa) values('$nome','$data','$contato'
-                //       ,'$tipopessoa');"); 
+                      $conectar->query("Insert Into Pessoa (Nome,Data,Contato,TipoPessoa) values('$nome','$data','$contato'
+                      ,'$tipopessoa');"); 
                } 
             
             
@@ -117,7 +131,7 @@ class APessoa extends Conexao1  {
                     
                       
            
-        } catch (Exception $ex) {
+        } catch (PDOException $ex) {
             echo "Error:".$ex->getMessage();
         }
         
@@ -136,12 +150,12 @@ class APessoa extends Conexao1  {
                 
               }else {
         
-                 $list=mysqli_query($conectar,"Select * from Pessoa");
-                 
+                 //$list=mysqli_query($conectar,"Select * from Pessoa");
+                 $list=$conectar->query("Select * from Pessoa");
                  return $list; 
                
               }
-        } catch (Exception $exc) {
+        } catch (PDOException $exc) {
             echo $exc->getMessage();
         }
 
@@ -161,13 +175,14 @@ class APessoa extends Conexao1  {
                 
               }else  {
         
-                  $query_id= mysqli_query($conectar,"Select Nome,Data,Contato,TipoPessoa From Pessoa 
-                          Where Id = '$id' ;");
+                  //$query_id= mysqli_query($conectar,"Select Nome,Data,Contato,TipoPessoa From Pessoa 
+                          //Where Id = '$id' ;");
                
+                  $query_id=$conectar->query("Select Nome,Data,Contato,TipoPessoa From Pessoa Where Id = '$id' ;");
                   return $query_id;
               }
               
-          } catch (Exception $exc) {
+          } catch (PDOException $exc) {
               echo $exc->getMessage();
           }
 
@@ -187,13 +202,14 @@ class APessoa extends Conexao1  {
                 
               }else if ($id>0){
         
-                 mysqli_query($conectar,"Delete from Pessoa where Id='$id' ;");
+                 //mysqli_query($conectar,"Delete from Pessoa where Id='$id' ;");
+                 $conectar->query("Delete from Pessoa where Id='$id' ;");
                  echo "<div class='text-center'><label class='alert alert-success alert-dismissible fade in' role='alert'><h3>Deletado com sucesso!</h3></label></div>"; 
               
               }else {
                  echo "<div class='text-center'><label class='alert alert-danger alert-dismissible fade in' role='alert'><h3>Não foi possivel deletar!</h3></label></div>"; 
               }
-        } catch (Exception $exc) {
+        } catch (PDOException $exc) {
             echo $exc->getTraceAsString();
         }
         

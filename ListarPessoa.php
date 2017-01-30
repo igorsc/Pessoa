@@ -52,13 +52,19 @@
         $controleusuario= new UsuarioControle();
         $query=$controleusuario->_GetData();
         //$query=mysql_query("Select * from Usuario",$link);
-         while (list($id,$login,$senha)= mysqli_fetch_row($query)){ //mysql_fetch_row($query)){                  
+        //while (list($id,$login,$senha)= mysqli_fetch_row($query)){ //mysql_fetch_row($query)){
+        foreach ($query as $row) {
+                              
             
-            if ($usuario->Login == $login && $usuario->Senha==$senha) {
+            //if ($usuario->Login == $login && $usuario->Senha==$senha) {
+              if ($usuario->Login == $row['Login'] && $usuario->Senha==$row['Senha']) {
                 session_start();
-                $_SESSION['Idlogin']=$id;
-                $_SESSION['login']=$login;
-                $_SESSION['senha']=$senha;
+                //$_SESSION['Idlogin']=$id;
+                //$_SESSION['login']=$login;
+                //$_SESSION['senha']=$senha;
+                $_SESSION['Idlogin']=$row['Id'];
+                $_SESSION['login']=$row['Login'];
+                $_SESSION['senha']=$row['Senha'];
                echo"<ul style='padding-left:1200px'>
                         <span>Bem Vindo ". $_SESSION['login']."</span> 
                         <a href='Account/Logoff.php'><span  class='glyphicon glyphicon-off'></span></a>                  
@@ -80,9 +86,10 @@
                //$query = mysql_query("Select * from Pessoa");
                $query = $pessoacontrole->_GetData();
                
-               while (list($id,$nome,$data,$contato,$tipopessoa)= mysqli_fetch_row($query)){ 
-                            
-                echo
+               //while (list($id,$nome,$data,$contato,$tipopessoa)= mysqli_fetch_row($query)){ 
+               foreach ($query as $row) {
+                                
+                /*echo
                 "<tbody>
                     <tr>
                         <td>".$nome."</td>
@@ -96,6 +103,21 @@
                         echo" <td><a id='editar' runat='server' href='CadastroPessoa.php?id=$id&nome=$nome&data=$data&contato=$contato&tipopessoa=$tipopessoa' class='glyphicon glyphicon-pencil' title='Editar'></a></td>
                         <td><a id='excluir' runat='server' href='DeletarPessoa.php?id=$id' title='Deletar' class='glyphicon glyphicon-remove'></a></td>
                     </tr> 
+                </tbody>";*/
+                echo
+                "<tbody>
+                    <tr>
+                        <td>".$row['Nome']."</td>
+                        <td>".$row['Data']."</td>
+                        <td>".$row['Contato']."</td>";
+                        if ($row['TipoPessoa']==Enumerator::Fisica){
+                           echo"<td>".'Física'."</td>"; 
+                        }else if($row['TipoPessoa']==Enumerator::Juridica){
+                            echo '<td>'.'Jurídica'.'</td>';
+                        }     
+                        echo" <td><a id='editar' runat='server' href='CadastroPessoa.php?id=".$row['Id']."&nome=".$row['Nome']."&data=".$row['Data']."&contato=".$row['Contato']."&tipopessoa=".$row['TipoPessoa']."' class='glyphicon glyphicon-pencil' title='Editar'></a></td>
+                        <td><a id='excluir' runat='server' href='DeletarPessoa.php?id=".$row['Id']."' title='Deletar' class='glyphicon glyphicon-remove'></a></td>
+                    </tr> 
                 </tbody>";
                        
                }
@@ -106,8 +128,10 @@
                         <a href='CadastroPessoa.html'><input type='submit' value='Adcionar' name='adicionar' class='btn-primary btn-lg' /></a>
                     </div>";
             } 
-               $varlogin=$login;
-               $varsenha=$senha;
+               //$varlogin=$login;
+               //$varsenha=$senha;
+               $varlogin= $_SESSION['login'];
+               $varsenha= $_SESSION['senha']; 
          }
          
          

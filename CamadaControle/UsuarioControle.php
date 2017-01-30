@@ -6,9 +6,8 @@
  * and open the template in the editor.
  */
 
-
-include_once '../AcessoBanco/AUsuario.php';
-
+define('diretorio','../AcessoBanco');
+require_once diretorio.'/AUsuario.php';
 
 class UsuarioControle extends AUsuario  {
     //put your code here
