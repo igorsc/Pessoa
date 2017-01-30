@@ -36,11 +36,11 @@ try{
         $controleusuario= new UsuarioControle();
         $result=  $controleusuario->_GetData();
         while (list($login,$senha)=  mysqli_fetch_row($result)){
-                 if ($usuario->Login==$item->Login ){
+                 if ($usuario->Login==$login ){
                     throw  new Exception();
                  }
 				 
-				 if (strlen($item->Senha)<4){
+				 if (strlen($senha)<4){
 					  throw new mysqli_sql_exception();		
 				 }
         }
