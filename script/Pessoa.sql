@@ -1,169 +1,145 @@
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+--
+-- Host: localhost    Database: pessoa
+-- ------------------------------------------------------
+-- Server version	5.7.12-log
 
--- --------------------------------------------------
--- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
--- --------------------------------------------------
--- Date Created: 05/11/2016 16:51:27
--- Generated from EDMX file: C:\Users\Igor\documents\visual studio 2015\Projects\Pessoa\Pessoa\Model\Pessoa.edmx
--- --------------------------------------------------
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-create database Pessoa;
+--
+-- Table structure for table `pessoa`
+--
 
-USE Pessoa;
+DROP TABLE IF EXISTS `pessoa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pessoa` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(100) NOT NULL,
+  `Data` date NOT NULL,
+  `Contato` varchar(100) NOT NULL,
+  `TipoPessoa` smallint(6) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `pessoa`
+--
 
+LOCK TABLES `pessoa` WRITE;
+/*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
+INSERT INTO `pessoa` VALUES (14,'Igor','1111-11-11','23 42342-3423',2),(19,'Tiago','1111-11-11','34 24242-3423',1),(20,'Tiago','1111-11-11','34 24242-3423',2),(22,'Igor','1111-11-11','42 34234-2342',2);
+/*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `pessoafisica`
+--
 
--- --------------------------------------------------
--- Creating all tables
--- --------------------------------------------------
+DROP TABLE IF EXISTS `pessoafisica`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pessoafisica` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Sobrenome` varchar(100) NOT NULL,
+  `CPF` varchar(14) NOT NULL,
+  `RG` varchar(13) NOT NULL,
+  `PessoaId` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `UK_PessoaFisica_CPF` (`CPF`),
+  UNIQUE KEY `UK_PessoaFisica_RG` (`RG`),
+  KEY `IX_FK_PessoaFisica_Pessoa` (`PessoaId`),
+  KEY `IX_UK_PessoaFisica_CPF` (`CPF`),
+  KEY `IX_UK_PessoaFisica_RG` (`RG`),
+  CONSTRAINT `FK_PessoaFisica_Pessoa` FOREIGN KEY (`PessoaId`) REFERENCES `pessoa` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Creating table 'Pessoa'
-CREATE TABLE Pessoa (
-    Id int auto_increment  NOT NULL,
-	Nome varchar(100)  not null,
-    Data date  NOT NULL,
-    Contato varchar(100)  NOT NULL,
-    TipoPessoa smallint  NOT NULL,
-    CONSTRAINT PK_Pessoa
-    PRIMARY KEY CLUSTERED (Id ASC) 
-);
+--
+-- Dumping data for table `pessoafisica`
+--
 
+LOCK TABLES `pessoafisica` WRITE;
+/*!40000 ALTER TABLE `pessoafisica` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pessoafisica` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `pessoajuridica`
+--
 
--- Creating table 'PessoaJuridica'
-CREATE TABLE PessoaJuridica (
-    Id int auto_increment NOT NULL,
-    CNPJ nvarchar(100)  NOT NULL ,
-    NomeFantasia varchar(100)  NOT NULL,
-    InscricaoEstadual nvarchar(100)  NOT NULL,
-    PessoaId int  NOT NULL,
-    CONSTRAINT PK_PessoaJuridica
-    PRIMARY KEY CLUSTERED (Id ASC)
-);
+DROP TABLE IF EXISTS `pessoajuridica`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pessoajuridica` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `CNPJ` varchar(100) NOT NULL,
+  `NomeFantasia` varchar(100) NOT NULL,
+  `InscricaoEstadual` varchar(100) NOT NULL,
+  `PessoaId` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `UK_PessoaJuridica_CNPJ` (`CNPJ`),
+  UNIQUE KEY `UK_PessoaJuridica_InscricaoEstadual` (`InscricaoEstadual`),
+  KEY `IX_FK_PessoaJuridica_Pessoa` (`PessoaId`),
+  KEY `IX_UK_PessoaJuridica_CNPJ` (`CNPJ`),
+  KEY `IX_UK_PessoaJuridica_InscricaoEstadual` (`InscricaoEstadual`),
+  CONSTRAINT `FK_PessoaJuridica_Pessoa` FOREIGN KEY (`PessoaId`) REFERENCES `pessoa` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `pessoajuridica`
+--
 
--- Creating table 'PessoaFisica'
-CREATE TABLE PessoaFisica (
-    Id int auto_increment NOT NULL,
-    Sobrenome varchar(100)  NOT NULL,
-	CPF nvarchar(14)  NOT NULL,
-    RG nvarchar(13)  NOT NULL,
-    PessoaId int  NOT NULL,
-     CONSTRAINT PK_PessoaFisica
-    PRIMARY KEY CLUSTERED (Id ASC)
-);
+LOCK TABLES `pessoajuridica` WRITE;
+/*!40000 ALTER TABLE `pessoajuridica` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pessoajuridica` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `usuario`
+--
 
--- --------------------------------------------------
--- Creating all PRIMARY KEY constraints
--- --------------------------------------------------
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(100) NOT NULL,
+  `senha` varchar(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_usuario_Login` (`login`),
+  KEY `IX_UK_Usuario_Login` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Creating primary key on [Id] in table 'Pessoa'
--- ALTER TABLE Pessoa
--- ADD CONSTRAINT PK_Pessoa
---    PRIMARY KEY CLUSTERED (Id ASC) ;
+--
+-- Dumping data for table `usuario`
+--
 
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'admin','1234'),(2,'igor','igor'),(3,'root','root'),(6,'administrator','igor'),(7,'adm','1234');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
--- Creating primary key on [Id] in table 'PessoaJuridica'
--- ALTER TABLE PessoaJuridica
--- ADD CONSTRAINT PK_PessoaJuridica
---    PRIMARY KEY CLUSTERED (Id ASC);
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Creating primary key on [Id] in table 'PessoaFisica'
--- ALTER TABLE PessoaFisica
--- ADD CONSTRAINT PK_PessoaFisica
---    PRIMARY KEY CLUSTERED (Id ASC);
-
-
--- --------------------------------------------------
--- Creating all FOREIGN KEY constraints
--- --------------------------------------------------
-
--- Creating foreign key on [PessoaId] in table 'PessoaJuridica'
-ALTER TABLE PessoaJuridica
-ADD CONSTRAINT FK_PessoaJuridica_Pessoa
-    FOREIGN KEY (PessoaId)
-    REFERENCES Pessoa
-        (Id)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PessoaJuridica_Pessoa'
-CREATE INDEX IX_FK_PessoaJuridica_Pessoa
-ON  PessoaJuridica
-    (PessoaId);
-
-
--- Creating foreign key on [PessoaId] in table 'PessoaFisica'
-ALTER TABLE PessoaFisica
-ADD CONSTRAINT FK_PessoaFisica_Pessoa
-    FOREIGN KEY (PessoaId)
-    REFERENCES Pessoa
-        (Id)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PessoaFisica_Pessoa'
-CREATE INDEX IX_FK_PessoaFisica_Pessoa
-ON PessoaFisica
-    (PessoaId);
-
-
-
-
--- -----------------------------------------
- -- Creating all UNIQUE KEY constraints
--- ----------------------------------------- 
-
- -- Creating unique key on [CNPJ] in table 'PessoaJuridica'
- alter table PessoaJuridica
- add constraint UK_PessoaJuridica_CNPJ
- unique key (CNPJ) ;
- 
--- Creating non-clustered index for UNIQUE KEY 'UK_PessoaJuridica_CNPJ' 
-CREATE INDEX IX_UK_PessoaJuridica_CNPJ
-ON  PessoaJuridica
-    (CNPJ);
- 
- -- Creating unique key on [InscricaoEstadual] in table 'PessoaJuridica'
- alter table PessoaJuridica
- add constraint UK_PessoaJuridica_InscricaoEstadual
- unique key (InscricaoEstadual) ;
- 
- -- Creating non-clustered index for UNIQUE KEY 'UK_PessoaJuridica_InscricaoEstadual' 
- CREATE INDEX IX_UK_PessoaJuridica_InscricaoEstadual
-ON  PessoaJuridica
-    (InscricaoEstadual);
-    
-    
-    
--- Creating unique key on [CPF] in table 'PessoaFisica'
- alter table PessoaFisica
- add constraint UK_PessoaFisica_CPF
- unique key (CPF) ;
- 
- 
--- Creating non-clustered index for UNIQUE KEY 'UK_PessoaFisica_CPF' 
-CREATE INDEX IX_UK_PessoaFisica_CPF
-ON  PessoaFisica
-    (CPF);
- 
- -- Creating unique key on [RG] in table 'PessoaFisica'
- alter table PessoaFisica
- add constraint UK_PessoaFisica_RG
- unique key (RG) ;
- 
- -- Creating non-clustered index for UNIQUE KEY 'UK_PessoaFisica_RG' 
- CREATE INDEX IX_UK_PessoaFisica_RG
-ON  PessoaFisica
-    (RG);
-
-
-
--- alter  table pessoajuridica
--- change column InscricaoeEstadual InscricaoEstadual nvarchar(100) not null;
- 
-
--- --------------------------------------------------
--- Script has ended
--- --------------------------------------------------
+-- Dump completed on 2017-08-24 16:17:41
