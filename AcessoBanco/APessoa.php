@@ -3,7 +3,7 @@ class Conexao1{
 public $server='127.0.0.1';
 public $user='root';
 public $senha='';
-public $db='Pessoa';
+public $db='Pessoas';
 
 
 //public function __construct($server, $user, $senha, $db) {
@@ -33,7 +33,7 @@ public function Conectar() {
         $server='127.0.0.1';
         $user='root';
         $senha='';
-        $db='Pessoa';
+        $db='Pessoas';
 
         try {
           

@@ -38,7 +38,7 @@ try{
         //while (list($login)=  mysqli_fetch_row($result)){
         foreach ($result as $user) {
           # code...
-                 if ($usuario->Login==$user['Login'] ){
+                 if ($usuario->Login==$user['login'] ){
                     throw  new PDOException();
                  }
                  if ( strlen($usuario->Senha)  != 4 ){

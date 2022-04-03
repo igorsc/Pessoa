@@ -32,7 +32,7 @@
             </thead>-->
         <?php
                
-                include '../Pessoa/CamadaControle/PessoaControle.php';
+                include './CamadaControle/PessoaControle.php';
                 include './CamadaControle/UsuarioControle.php';
                 include './Entitie/Enumerator.php';
                 include './Entitie/Usuario.php';
@@ -57,14 +57,14 @@
                               
             
             //if ($usuario->Login == $login && $usuario->Senha==$senha) {
-              if ($usuario->Login == $row['Login'] && $usuario->Senha==$row['Senha']) {
+              if ($usuario->Login == $row['login'] && $usuario->Senha==$row['senha']) {
                 session_start();
                 //$_SESSION['Idlogin']=$id;
                 //$_SESSION['login']=$login;
                 //$_SESSION['senha']=$senha;
-                $_SESSION['Idlogin']=$row['Id'];
-                $_SESSION['login']=$row['Login'];
-                $_SESSION['senha']=$row['Senha'];
+                $_SESSION['Idlogin']=$row['id'];
+                $_SESSION['login']=$row['login'];
+                $_SESSION['senha']=$row['senha'];
                echo"<ul style='padding-left:1200px'>
                         <span>Bem Vindo ". $_SESSION['login']."</span> 
                         <a href='Account/Logoff.php'><span  class='glyphicon glyphicon-off'></span></a>                  
@@ -130,8 +130,8 @@
             } 
                //$varlogin=$login;
                //$varsenha=$senha;
-               $varlogin= $_SESSION['login'];
-               $varsenha= $_SESSION['senha']; 
+               $varlogin= $_REQUEST['login'];
+               $varsenha= $_REQUEST['senha']; 
          }
          
          

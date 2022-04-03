@@ -1,6 +1,6 @@
 <?php
 define('diretorio','./AcessoBanco');
-require_once diretorio.'/APessoa.php';
+require diretorio.'/APessoa.php';
 ?> 
 
 <?php
